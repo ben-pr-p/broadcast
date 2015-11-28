@@ -22,7 +22,7 @@ function broadCastMany(message, teamsToSend, idx, fn) {
     log('Finished broadcasting. Returning teams %s', teamsToSend);
     fn(null, teamsToSend);
   }
-
+  log(teamsToSend[idx]);
   broadcastOne(teamsToSend[idx].OUT_URL, message, function (err, body) {
     if (err) return fn(err);
 
