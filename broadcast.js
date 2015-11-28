@@ -29,7 +29,7 @@ function broadCastMany(message, teamsToSend, idx, fn) {
   });
 }
 
-module.exports = function broadcast(postUrl, data, fn) {
+module.exports = function broadcast(data, fn) {
   log(data);
   log(teams);
   log(data.team_domain);
