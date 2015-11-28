@@ -1,0 +1,12 @@
+{
+  "name": "broadcast",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "debug": "^2.1.3",
+    "express": "~4.10.6",
+    "request": "^2.51.0"
+  }
+}
