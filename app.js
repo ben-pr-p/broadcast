@@ -7,12 +7,20 @@ var log = require('debug')('broadcast:app');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var teams = require('./data');
+var TOKENS = teams.filter(t => t.incoming).map(t => t.IN_TOKEN);
+
 /**
  * Handle requests
  */
 
 app.post('/', function (req, res) {
   log('Recieved message with data %j', req.body);
+
+  if (TOKENS.indexOf(req.body.token) < 0) {
+    log('Request is forbidden.');
+    res.sendStatus(403);
+  }
 
   broadcast(req.body, function (err, teams) {
     if (err) {
