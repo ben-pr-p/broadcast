@@ -31,11 +31,6 @@ function broadCastMany(message, teamsToSend, idx, fn) {
 }
 
 module.exports = function broadcast(data, fn) {
-  log(data);
-  log(teams);
-  log(data.team_domain);
-  log(teams[0].team_domain);
-  log(teams[0].team_domain == data.team_domain);
   var displayName = teams.filter(t => t.team_domain == data.team_domain)[0].team_display;
   var text = data.text.substr(10);
 
