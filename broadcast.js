@@ -37,6 +37,7 @@ module.exports = function broadcast(data, fn) {
   var message = `${data.user_name} from ${displayName} says:\n>${text}`;
 
   var teamsToSend = teams.filter(t => t.outgoing);
+  log(teams);
   log('Teams to send: %s', teamsToSend);
 
   broadCastMany(message, teamsToSend, 0, function (err, teamsSent) {
