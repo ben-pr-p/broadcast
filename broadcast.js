@@ -20,9 +20,9 @@ function broadcastOne(postUrl, message, fn) {
 function broadCastMany(message, teamsToSend, idx, fn) {
   if (idx == teamsToSend.length) {
     log('Finished broadcasting. Returning teams %s', teamsToSend);
-    fn(null, teamsToSend);
+    return fn(null, teamsToSend);
   }
-  log('Sending to: %s', teamsToSend[idx]);
+
   broadcastOne(teamsToSend[idx].OUT_URL, message, function (err, body) {
     if (err) return fn(err);
 
@@ -37,8 +37,6 @@ module.exports = function broadcast(data, fn) {
   var message = `${data.user_name} from ${displayName} says:\n>${text}`;
 
   var teamsToSend = teams.filter(t => t.outgoing);
-  log(teams);
-  log('Teams to send: %s', teamsToSend);
 
   broadCastMany(message, teamsToSend, 0, function (err, teamsSent) {
     if (err) {
