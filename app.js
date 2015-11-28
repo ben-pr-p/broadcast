@@ -1,31 +1,36 @@
 var express = require('express');
-var request = require('request');
 var bodyParser = require('body-parser');
 var querystring = require('querystring');
-var log = require('debug')('broadcast')
+var broadcast = require('./broadcast');
+var log = require('debug')('broadcast:app');
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var TEAM_TOKENS = process.env.TEAM_TOKENS;
-if (!TEAM_TOKENS) {
-  log('Missing env var TEAM_TOKENS – exiting...');
-  process.exit();
-}
-
-TEAM_TOKENS = TEAM_TOKENS.split(',');
-log('Starting with TEAM_TOKENS %s', TEAM_TOKENS);
+/**
+ * Handle requests
+ */
 
 app.post('/', function (req, res) {
   log('Recieved message with data %j', req.body);
 
-  return res.json({
-    text: 'I have recieved your message! Thanks!'
+  broadcast(req.body, function (err, teams) {
+    if (err) {
+      log('Found error: %s', err);
+      return res.json({
+        text: `@${req.body.user_name}: unable to broadcast message – error: ${err}`
+      });
+    }
+
+    log('Successfully sent message to teams %s', teams);
+    res.json({
+      text: `@${req.body.user_name}: your message has been broadcasted to teams ${teams.join(',')}`
+    });
   });
 });
 
 /*
- * Get it started!
+ * Start the server
  */ 
 
 var PORT = process.env.PORT;
