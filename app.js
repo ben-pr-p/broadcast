@@ -5,7 +5,7 @@ var querystring = require('querystring');
 var log = require('debug')('broadcast')
 
 var app = express();
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var TEAM_TOKENS = process.env.TEAM_TOKENS;
 if (!TEAM_TOKENS) {
