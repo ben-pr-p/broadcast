@@ -30,7 +30,7 @@ function broadCastMany(message, teamsToSend, idx, fn) {
 }
 
 module.exports = function broadcast(postUrl, data, fn) {
-  var displayName = data.filter(t => t.team_domain == data.team_domain)[0].team_display;
+  var displayName = teams.filter(t => t.team_domain == data.team_domain)[0].team_display;
   var text = data.text.substr(10);
 
   var message = `${data.user_name} from ${displayName} says:\n>${text}`;
