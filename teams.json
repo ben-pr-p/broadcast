@@ -4,5 +4,11 @@
     "team_display": "College Students for Bernie",
     "incoming": true,
     "outgoing": true
+  },
+  {
+    "team_domain": "feelthebern",
+    "team_display": "FeelTheBern.org",
+    "incoming": true,
+    "outgoing": true
   }
 ]

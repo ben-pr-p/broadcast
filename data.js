@@ -34,4 +34,3 @@ teams.forEach(function (t) {
 });
 
 module.exports = teams;
-
