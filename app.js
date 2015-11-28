@@ -17,9 +17,9 @@ TEAM_TOKENS = TEAM_TOKENS.split(',');
 log('Starting with TEAM_TOKENS %s', TEAM_TOKENS);
 
 app.post('/', function (req, res) {
-  var data = req.body;
-  log('Recieved message with data %j', data);
-  res.send(200);
+  log('Recieved message with data %j', req.body);
+  log(req);
+  res.sendStatus(200);
 });
 
 /*
