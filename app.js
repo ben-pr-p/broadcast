@@ -5,7 +5,7 @@ var querystring = require('querystring');
 var log = require('debug')('broadcast')
 
 var app = express();
-app.use(express.bodyParser());
+app.use(bodyParser.json());
 
 var TEAM_TOKENS = process.env.TEAM_TOKENS;
 if (!TEAM_TOKENS) {
@@ -18,8 +18,10 @@ log('Starting with TEAM_TOKENS %s', TEAM_TOKENS);
 
 app.post('/', function (req, res) {
   log('Recieved message with data %j', req.body);
-  log(req);
-  res.sendStatus(200);
+
+  res.json({
+    text: '@broadcast has recieved your request!'
+  });
 });
 
 /*
