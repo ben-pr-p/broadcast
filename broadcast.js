@@ -32,10 +32,14 @@ function broadCastMany(message, teamsToSend, idx, fn) {
 }
 
 module.exports = function broadcast(data, fn) {
-  var displayName = teams.filter(t => t.team_domain == data.team_domain)[0].team_display;
+  var originTeam = teams.filter(t => t.team_domain == data.team_domain)[0];
+
+  var displayName = originTeam.team_display;
   var text = data.text.substr(10);
 
   var message = `${data.user_name} from ${displayName} says:\n>${text}`;
+
+  if (originTeam.notifications == false) message = message.replace('@', '');
 
   var teamsToSend = teams.filter(t => t.outgoing);
 
