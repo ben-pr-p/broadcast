@@ -16,13 +16,11 @@ if (!TEAM_TOKENS) {
 TEAM_TOKENS = TEAM_TOKENS.split(',');
 log('Starting with TEAM_TOKENS %s', TEAM_TOKENS);
 
-process.exit();
-
 app.post('/', function (req, res) {
   log('Recieved message with data %j', req.body);
 
-  res.json({
-    text: '@broadcast has recieved your request!'
+  return res.json({
+    text: 'I have recieved your message! Thanks!'
   });
 });
 
