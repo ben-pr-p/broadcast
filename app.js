@@ -2,7 +2,7 @@ var express = require('express');
 var request = require('request');
 var bodyParser = require('body-parser');
 var querystring = require('querystring');
-var log = require('debug')('csfb-broadcast')
+var log = require('debug')('broadcast')
 
 var app = express();
 app.use(bodyParser.json());
