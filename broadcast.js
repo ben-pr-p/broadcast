@@ -4,11 +4,12 @@ var log = require('debug')('broadcast:broadcast');
 
 function broadcastOne(postUrl, message, fn) {
   request({
-    method: 'POST',
+    method: 'post',
     url: postUrl,
-    form: {
+    body: {
       text: message
-    }
+    },
+    json: true
   }, function (err, response, body) {
     if (err) return fn(err);
 
@@ -19,7 +20,7 @@ function broadcastOne(postUrl, message, fn) {
 
 function broadCastMany(message, teamsToSend, idx, fn) {
   if (idx == teamsToSend.length) {
-    log('Finished broadcasting. Returning teams %s', teamsToSend);
+    log('Finished broadcasting. Returning teams %j', teamsToSend);
     return fn(null, teamsToSend);
   }
 
