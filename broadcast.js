@@ -12,13 +12,14 @@ function broadcastOne(postUrl, message, fn) {
   }, function (err, response, body) {
     if (err) return fn(err);
 
+    log('Successfully send post to %s', postUrl);
     return fn(null, body);
   });
 }
 
 function broadCastMany(message, teamsToSend, idx, fn) {
   if (idx == teamsToSend.length) {
-    log('Finished broadcasting. Returning teams.');
+    log('Finished broadcasting. Returning teams %s', teamsToSend);
     fn(null, teamsToSend);
   }
 
