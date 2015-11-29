@@ -12,5 +12,12 @@
     "incoming": true,
     "outgoing": true,
     "notifications": false
+  },
+  {
+    "team_domain": "socialmedia4sanders",
+    "team_display": "Social Media 4 Sanders",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
   }
 ]
