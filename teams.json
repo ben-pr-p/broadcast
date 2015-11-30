@@ -19,5 +19,26 @@
     "incoming": true,
     "outgoing": true,
     "notifications": false
+  },
+  {
+    "team_domain": "millennialsforbernie",
+    "team_display": "Millennials for Bernie Sanders",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
+  },
+  {
+    "team_domain": "illinois4bernie",
+    "team_display": "Illinois for Bernie",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
+  },
+  {
+    "team_domain": "chicago4bernie",
+    "team_display": "Chicago 4 Bernie",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
   }
 ]
