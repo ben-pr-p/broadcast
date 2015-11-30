@@ -1,6 +1,8 @@
 # broadcast
 Multi-team Slack bot that enables sharing messages across different Slacks.
 
+If you're a Bernie group, go here: http://wiki.4berniesanders.com/index.php/Broadcast
+
 To use, clone the repository and change `teams.json`: 
 ```
 [
