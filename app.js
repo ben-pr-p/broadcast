@@ -25,7 +25,7 @@ function helpMessage () {
    > \`broadcast: help\` or \`broadcast:\` with nothing after.
 
    > You currently have ${teams.length} teams connected to your broadcast: they are:
-   >  ${teams.map(t => t.team_display).join(', ')}`l;
+   >  ${teams.map(t => t.team_display).join(', ')}`;
 }
 
 /**
