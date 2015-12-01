@@ -40,5 +40,12 @@
     "incoming": true,
     "outgoing": true,
     "notifications": false
+  },
+  {
+    "team_domain": "ohioforsanders",
+    "team_display": "Ohio for Bernie Sanders",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
   }
 ]
