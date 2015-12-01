@@ -32,7 +32,7 @@ app.post('/', function (req, res) {
 
     log('Successfully sent message to teams %s', teams);
     res.json({
-      text: `@${req.body.user_name}: your message has been broadcasted to teams ${teams.join(',')}`
+      text: `@${req.body.user_name}: your message has been broadcasted to teams ${teams.join(', ')}`
     });
   });
 });
