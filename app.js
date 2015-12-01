@@ -36,8 +36,10 @@ app.post('/', function (req, res) {
   log('Recieved message with data %j', req.body);
 
   if (TOKENS.indexOf(req.body.token) < 0) {
-    log('Request is forbidden.');
-    res.sendStatus(403);
+    log(`Request from ${req.body.team_domain} is forbidden.`);
+    return res.json({
+      text: `Sorry @${req.body.user_name}, ${req.body.team_domain} does not have posting permissions.`
+    });
   }
 
   if (helpRequested(req.body.text)) {
