@@ -54,5 +54,12 @@
     "incoming": true,
     "outgoing": true,
     "notifications": false
+  },
+  {
+    "team_domain": "expats4bernie",
+    "team_display": "Expats4Bernie",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
   }
 ]
