@@ -47,5 +47,12 @@
     "incoming": true,
     "outgoing": true,
     "notifications": false
+  },
+  {
+    "team_domain": "uberforsanders",
+    "team_display": "Ride With Bernie Carpool App",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
   }
 ]
