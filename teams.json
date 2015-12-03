@@ -61,5 +61,12 @@
     "incoming": true,
     "outgoing": true,
     "notifications": false
+  },
+  {
+    "team_domain": "cprbernie",
+    "team_display": "CPR Bernie (Denver)",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
   }
 ]
