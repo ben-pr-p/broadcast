@@ -68,5 +68,12 @@
     "incoming": true,
     "outgoing": true,
     "notifications": false
+  },
+  {
+    "team_domain": "berniebnb",
+    "team_display": "Bernie BNB",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
   }
 ]
