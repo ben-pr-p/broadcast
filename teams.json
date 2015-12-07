@@ -75,5 +75,19 @@
     "incoming": true,
     "outgoing": true,
     "notifications": false
+  },
+  {
+    "team_domain": "paforsanders",
+    "team_display": "Pennsylvania for Sanders",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
+  },
+  {
+    "team_domain": "philly4bernie",
+    "team_display": "Philadelphia for Bernie",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
   }
 ]
