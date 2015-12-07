@@ -89,5 +89,12 @@
     "incoming": true,
     "outgoing": true,
     "notifications": false
+  },
+  {
+    "team_domain": "lettersforbernie",
+    "team_display": "Letters for Bernie",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
   }
 ]
