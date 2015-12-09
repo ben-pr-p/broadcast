@@ -96,5 +96,26 @@
     "incoming": true,
     "outgoing": true,
     "notifications": false
+  },
+  {
+    "team_domain": "arizonaforsanders",
+    "team_display": "Arizona For Bernie Sanders",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
+  },
+  {
+    "team_domain": "californiaforsanders",
+    "team_display": "California for Sanders",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
+  },
+  {
+    "team_domain": "grassrootsforsanders",
+    "team_display": "Grassroots for Sanders",
+    "incoming": true,
+    "outgoing": true,
+    "notifications": false
   }
 ]
