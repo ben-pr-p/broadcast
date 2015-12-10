@@ -28,5 +28,6 @@ Ideas for future development:
 * Enable someone to broadcast a message to only certain Slacks
 * Enable modification of permissions from the Slack command line
 * Multi-tiered permission system with certain Slacks allowed to send messages to certain other Slacks
+* Maybe creating "groups" of Slacks for targeted messaging?
 
-I don't have plans to implement any of these in the immediate future. Pull requests welcome.
+I have plans to implement all of these in the immediate future. Pull requests welcome.
