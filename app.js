@@ -10,23 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var teams = require('./data');
 var TOKENS = teams.filter(t => t.incoming).map(t => t.IN_TOKEN);
 
-function helpRequested (text) {
-  var parsed = text.split(' ');
-  if (parsed.length == 1) return true;
-  if (parsed[1] == 'help') return true;
-  return false;
-}
-
-function helpMessage () {
-  return `> Welcome to broadcast! A Slack bot for sending messages across Slack teams. To use broadcast, simply type:
-   > \`broadcast: <your message here>\`
-
-   > If you'd like to see this help message, type:
-   > \`broadcast: help\` or \`broadcast:\` with nothing after.
-
-   > You currently have ${teams.length} teams connected to your broadcast: they are:
-   >  ${teams.map(t => t.team_display).join(', ')}`;
-}
+var argParse = require('./arg-parse');
 
 /**
  * Handle requests
@@ -42,9 +26,9 @@ app.post('/', function (req, res) {
     });
   }
 
-  if (helpRequested(req.body.text)) {
+  if (argParse.helpRequested(req.body.text)) {
     return res.json({
-      text: `@${req.body.user_name}: ${helpMessage()}`
+      text: `@${req.body.user_name}: ${argParse.helpMessage()}`
     });
   }
 
