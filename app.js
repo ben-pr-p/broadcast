@@ -21,7 +21,7 @@ function helpMessage () {
   return `> Welcome to broadcast! A Slack bot for sending messages across Slack teams. To use broadcast, simply type:
    > \`broadcast: <your message here>\`
 
-   > If you'd to see this help message, type:
+   > If you'd like to see this help message, type:
    > \`broadcast: help\` or \`broadcast:\` with nothing after.
 
    > You currently have ${teams.length} teams connected to your broadcast: they are:
