@@ -1,5 +1,5 @@
 var request = require('request');
-var teams = require('./data');
+var db = require('./db-api');
 var log = require('debug')('broadcast:broadcast');
 
 function broadcastOne(postUrl, message, fn) {
@@ -24,30 +24,36 @@ function broadCastMany(message, teamsToSend, idx, fn) {
     return fn(null, teamsToSend);
   }
 
-  broadcastOne(teamsToSend[idx].OUT_URL, message, function (err, body) {
+  broadcastOne(teamsToSend[idx].outUrl, message, function (err, body) {
     if (err) return fn(err);
 
     broadCastMany(message, teamsToSend, idx + 1, fn);
   });
 }
 
-module.exports = function broadcast(data, fn) {
-  var originTeam = teams.filter(t => t.team_domain == data.team_domain)[0];
+module.exports = function broadcast(data, targetTeams, fn) {
+  db.teamsFor(data.team_domain, function (err, teams) {
+    var originTeam = teams.filter(t => t.domain == data.team_domain)[0];
 
-  var displayName = originTeam.team_display;
-  var text = data.text.substr(10);
+    var displayName = originTeam.display;
 
-  var message = `${data.user_name} from ${displayName} says:\n>${text}`;
+    var text;
+    if (targetTeams) text = data.text.substr(data.text.indexOf(']'));
+    else text = data.text.substr(10);
 
-  if (originTeam.notifications == false) message = message.replace('@', '');
+    var teamsToSend = teams.filter(t => targetTeams.indexOf(t.domain) > -1);
 
-  var teamsToSend = teams.filter(t => t.outgoing);
+    var message = `${data.user_name} from ${displayName} says:\n${text}`;
 
-  broadCastMany(message, teamsToSend, 0, function (err, teamsSent) {
-    if (err) {
-      log('Found error: %s', err);
-      return fn(err);
-    }
-    fn(null, teamsSent.map(t => t.team_display));
+    if (!originTeam.notifications) message = message.replace('@', '');
+
+    broadCastMany(message, teamsToSend, 0, function (err, teamsSent) {
+      if (err) {
+        log('Found error: %s', err);
+        return fn(err);
+      }
+      fn(null, teamsSent.map(t => t.team_display));
+    });
+
   });
 }

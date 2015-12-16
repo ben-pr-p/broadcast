@@ -1,16 +1,16 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var querystring = require('querystring');
-var broadcast = require('./broadcast');
 var log = require('debug')('broadcast:app');
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var teams = require('./data');
-var TOKENS = teams.filter(t => t.incoming).map(t => t.IN_TOKEN);
+require('./initialize-db.js')(app);
 
 var argParse = require('./arg-parse');
+var db = require('./db-api');
+var broadcast = require('./broadcast');
 
 /**
  * Handle requests
@@ -19,20 +19,131 @@ var argParse = require('./arg-parse');
 app.post('/', function (req, res) {
   log('Recieved message with data %j', req.body);
 
-  if (TOKENS.indexOf(req.body.token) < 0) {
-    log(`Request from ${req.body.team_domain} is forbidden.`);
-    return res.json({
-      text: `Sorry @${req.body.user_name}, ${req.body.team_domain} does not have posting permissions.`
-    });
-  }
-
+  /**
+   * If they want help, give it to them!
+   */
   if (argParse.helpRequested(req.body.text)) {
-    return res.json({
-      text: `@${req.body.user_name}: ${argParse.helpMessage()}`
+    argParse.helpMessage(function (err, message) {
+      if (err) {
+        return res.json({
+          text: `@${req.body.user_name}: Sorry – could not recieved help message. Something is wrong! Panic!`
+        });
+      }
+
+      return res.json({
+        text: `@${req.body.user_name}: ${message}`
+      });  
     });
   }
 
-  broadcast(req.body, function (err, teams) {
+  /**
+   * If they want to ban or unban a user, do so! (only if they're an admin)
+   */
+  var bannedUser = argParse.bannedUser(req.body.text);
+  var unbannedUser = argParse.unbannedUser(req.body.text);
+  if (bannedUser || unbannedUser) {
+
+    db.getUser(req.body.user_name, function (err, banningUser) {
+      if (err) return res.json({
+        text: err
+      });
+
+      if (!banningUser.admin) {
+        return res.json({
+          text: `Sorry @${req.body.user_name}, you aren't an admin and can't ban or unban people!`
+        });
+      }
+
+      var banOrUnban = unbannedUser == null;
+      db.modifySend(bannedUser || unbannedUser, banOrUnban, function (err, user) {
+        if (err) {
+          return res.json({
+            text: err
+          });
+        }
+
+        return res.json({
+          text: `@${req.body.user_name}: Successfully ${banOrUnban ? 'banned' : 'unbanned'} ${user.username}`
+        });
+      });
+
+    });
+  }
+
+  /**
+   * If they want to make someone an admin, or remove their admin privileges, do it!
+   */
+  var adminUser = argParse.adminUser(req.body.text);
+  var deadminUser = argParse.deadminUser(req.body.text);
+  if (adminUser || deadminUser) {
+
+    db.getUser(req.body.user_name, function (err, banningUser) {
+      if (err) return res.json({
+        text: err
+      });
+
+      if (!banningUser.admin) {
+        return res.json({
+          text: `Sorry @${req.body.user_name}, you aren't an admin and can't ban or unban people!`
+        });
+      }
+
+      var adminOrDeadmin = deadminUser == null;
+      db.modifyUserAdmin(adminUser || deadminUser, adminOrDeadmin, function (err, user) {
+        if (err) {
+          return res.json({
+            text: err
+          });
+        }
+
+        return res.json({
+          text: `@${req.body.user_name}: Successfully ${adminOrDeadmin ? 'gave admin privileges to' : 'remove admin privileges from'} ${user.username}`
+        });
+      });
+
+    });
+  }
+
+  /**
+   * If they want to turn on or off a team, do it!
+   */
+  var onTeam = argParse.onTeam(req.body.text);
+  var offTeam = argParse.offTeam(req.body.text);
+  if (offTeam || onTeam) {
+    var onOrOff = offTeam == null;
+
+    db.modifyAccepts(req.body.team_domain, onTeam || offTeam, onOrOff, function (err, reciever) {
+      if (err) return res.json({
+        text: err
+      });
+
+      return res.json({
+        text: `@${req.body.user_name}, ${onTeam || offTeam} was successfully turned ${onOrOff ? 'on' : 'off'}`
+      });
+    });
+  }
+
+  /**
+   * If they want the team list, give it to them!
+   */
+  if (argParse.teamListRequested(req.body.text)) {
+    argParse.teamList(req.body.team_domain, function (err, message) {
+      if (err) {
+        return res.json({
+          text: `@${req.body.user_name}: Sorry – could not recieved team list. Something is wrong! Panic!`
+        });
+      }
+
+      return res.json({
+        text: `@${req.body.user_name}: Here's your team list! ${message}`
+      });
+    });
+  }
+
+  /**
+   * Finally, broadcast!
+   */
+  broadcast(req.body, argParse.parseTargetTeams(req.body.text), function (err, teams) {
     if (err) {
       log('Found error: %s', err);
       return res.json({
