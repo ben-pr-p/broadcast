@@ -73,11 +73,14 @@ exports.addTeam = function addTeam (team, fn) {
     newTeam.save(function (err) {
       if (err) return log(err), fn(err);
 
-      async.parallel( teams.map(t => modifyAccepts(t.domain, newTeam.domain, true) ), function (err, teams) {
-        if (err) return log(err), fn(err);
+      exports.allTeams(function (err, teams) {
+        async.parallel( teams.map(t => modifyAccepts(t.domain, newTeam.domain, true) ), function (err, teams) {
+          if (err) return log(err), fn(err);
 
-        return fn(null, newTeam);
+          return fn(null, newTeam);
+        });
       });
+      
     });
   });
 
