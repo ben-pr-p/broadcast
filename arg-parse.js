@@ -44,9 +44,8 @@ exports.teamListRequested = function (text) {
 
   var teamsIdx = tokens.indexOf('--teams');
   if (teamsIdx > -1) {
-    if (tokens[teamsIdx + 1][0] != '[') {
-      return true;
-    }
+    if (tokens.length == 2) return true;
+    if (tokens[teamsIdx + 1][0] != '[') return true;
   }
 
   return false;
