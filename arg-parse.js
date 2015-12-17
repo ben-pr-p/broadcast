@@ -1,4 +1,5 @@
 var db = require('./db-api');
+var log = require('debug')('broadcast:arg-parse');
 
 function plusOneOf(text, marker) {
   var tokens = text.split(' ');
