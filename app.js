@@ -155,6 +155,7 @@ app.post('/', function (req, res) {
 
     eval(`var team = ${req.body.text.substr(req.body.text.indexOf('{'))}`);
     team.outUrl = team.outUrl.replace('<','').replace('>','');
+    
     db.addTeam(team, function (err, team) {
       if (err) return res.json({
         text: `@${req.body.user_name}: Found error ${err}`

@@ -17,7 +17,7 @@ exports.allTeams = function allTeams (fn) {
 
     if (!teams) return log('No teams found – returning null'), fn(null);
 
-    return log('Found teams %s', teams), fn(null, teams);
+    return log('Found teams %s', teams.map(t => t.id)), fn(null, teams);
   });
 }
 
