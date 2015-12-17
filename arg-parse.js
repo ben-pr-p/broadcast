@@ -124,6 +124,7 @@ exports.helpMessage = function (fn) {
     teams.forEach(t => {
       teamsDisplay += `• ${t.domain} -->> ${t.display}\n`;
     });
+    teamsDisplay = teamsDisplay.substring(0, teamsDisplay.length - 1);
 
     return fn(null, `Welcome to broadcast! A Slack bot that sends messages across Slack teams.
 *Broadcast a message* with:
