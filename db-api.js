@@ -74,7 +74,7 @@ exports.addTeam = function addTeam (team, fn) {
       if (err) return log(err), fn(err);
 
       exports.allTeams(function (err, teams) {
-        async.parallel( teams.map(t => modifyAccepts(t.domain, newTeam.domain, true) ), function (err, teams) {
+        async.parallel( teams.map(t => exports.modifyAccepts(t.domain, newTeam.domain, true) ), function (err, teams) {
           if (err) return log(err), fn(err);
 
           return fn(null, newTeam);
