@@ -73,7 +73,7 @@ exports.teamList = function (askingTeamDomain, fn) {
   });
 }
 
-exports.parseTargetTeams = function (fn) {
+exports.parseTargetTeams = function (text) {
   var tokens = text.split(' ');
 
   var teamsIdx = tokens.indexOf('--teams');
