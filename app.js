@@ -18,11 +18,14 @@ var broadcast = require('./broadcast');
 
 app.post('/', function (req, res) {
   log('Recieved message with data %j', req.body);
+  var shouldBroadcast = true;
 
   /**
    * If they want help, give it to them!
    */
   if (argParse.helpRequested(req.body.text)) {
+    log('Help requested. Will not broadcast message.'); shouldBroadcast = false;
+
     argParse.helpMessage(function (err, message) {
       if (err) {
         return res.json({
@@ -42,6 +45,7 @@ app.post('/', function (req, res) {
   var bannedUser = argParse.bannedUser(req.body.text);
   var unbannedUser = argParse.unbannedUser(req.body.text);
   if (bannedUser || unbannedUser) {
+    log('Ban modification requested. Will not broadcast message.'); shouldBroadcast = false;
 
     db.getUser(req.body.user_name, function (err, banningUser) {
       if (err) return res.json({
@@ -76,6 +80,7 @@ app.post('/', function (req, res) {
   var adminUser = argParse.adminUser(req.body.text);
   var deadminUser = argParse.deadminUser(req.body.text);
   if (adminUser || deadminUser) {
+    log('Admin changes requested. Will not broadcast message.'); shouldBroadcast = false;
 
     db.getUser(req.body.user_name, function (err, banningUser) {
       if (err) return res.json({
@@ -110,6 +115,7 @@ app.post('/', function (req, res) {
   var onTeam = argParse.onTeam(req.body.text);
   var offTeam = argParse.offTeam(req.body.text);
   if (offTeam || onTeam) {
+    log('Quieting requested. Will not broadcast message.'); shouldBroadcast = false;
     var onOrOff = offTeam == null;
 
     db.modifyAccepts(req.body.team_domain, onTeam || offTeam, onOrOff, function (err, reciever) {
@@ -127,6 +133,7 @@ app.post('/', function (req, res) {
    * If they want the team list, give it to them!
    */
   if (argParse.teamListRequested(req.body.text)) {
+    log('Team list requested. Will not broadcast message.'); shouldBroadcast = false;
     argParse.teamList(req.body.team_domain, function (err, message) {
       if (err) {
         return res.json({
@@ -144,6 +151,8 @@ app.post('/', function (req, res) {
    * If they want to add a team, do it!
    */
   if (argParse.addingTeam(req.body.text)) {
+    log('Adding team requested. Will not broadcast message.'); shouldBroadcast = false;
+
     eval(`var team = ${req.body.text.substr(req.body.text.indexOf('{'))}`);
     db.addTeam(team, function (err, team) {
       if (err) return res.json({
@@ -155,6 +164,11 @@ app.post('/', function (req, res) {
       });
     });
   }
+
+  /**
+   * Should I be here right now?
+   */
+  if (!shouldBroadcast) return;
 
   /**
    * Finally, broadcast!

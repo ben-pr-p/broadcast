@@ -95,6 +95,7 @@ exports.helpRequested = function (text) {
   var parsed = text.split(' ');
   if (parsed.length == 1) return true;
   if (parsed[1] == 'help') return true;
+  if (parsed[1] == '--help') return true;
   return false;
 }
 
@@ -107,7 +108,7 @@ exports.helpMessage = function (fn) {
       teamsDisplay += `• ${t.domain} -->> ${t.display}\n`;
     });
 
-    return fn(null, `Welcome to broadcast! A Slack bot for sending messages across Slack teams.
+    return fn(null, `Welcome to broadcast! A Slack bot that sends messages across Slack teams.
 *Broadcast a message* with:
 ${'```'}broadcast: <your message here>${'```'}
 
