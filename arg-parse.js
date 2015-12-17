@@ -11,10 +11,11 @@ function indexOfMarker(tokens, marker) {
     tokens.indexOf(`––${marker}`)
   ];
   log(possibilities);
+  var result = -1;
   possibilities.forEach(idx => {
-    if (idx > -1) return idx;
+    result = idx;
   });
-  return -1;
+  return result;
 }
 
 function plusOneOf(text, marker) {
