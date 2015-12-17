@@ -43,7 +43,8 @@ module.exports = function broadcast(data, targetTeams, fn) {
     if (targetTeams) text = data.text.substr(data.text.indexOf(']'));
     else text = data.text.substr(10);
 
-    var teamsToSend = teams.filter(t => targetTeams.indexOf(t.domain) > -1);
+    var teamsToSend = teams;
+    if (targetTeams) teamsToSend = teams.filter(t => targetTeams.indexOf(t.domain) > -1);
 
     var message = `${'```'}${data.user_name} from ${displayName} says:${'```'}\n${text}`;
 
