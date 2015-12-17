@@ -1,5 +1,5 @@
 # broadcast
-Multi-team Slack bot that enables sharing messages across different Slacks.
+![alt tag](http://i.imgur.com/Qa2Civs.png)
 
 If you're a Bernie group, go here: http://wiki.4berniesanders.com/index.php/Broadcast
 
