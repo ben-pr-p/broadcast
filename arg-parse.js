@@ -2,6 +2,8 @@ var db = require('./db-api');
 var log = require('debug')('broadcast:arg-parse');
 
 function indexOfMarker(tokens, marker) {
+  log(tokens);
+  log(marker);
   var possibilities = [
     tokens.indexOf(`—${marker}`), 
     tokens.indexOf(`-${marker}`), 
@@ -55,9 +57,8 @@ exports.addingTeam = function (text) {
 
 exports.teamListRequested = function (text) {
   var tokens = text.split(' ');
-  log(tokens);
+
   var teamsIdx = indexOfMarker(tokens, 'teams');
-  log(teamsIdx);
   if (teamsIdx > -1) {
     if (tokens.length < 3) return true;
     if (tokens[teamsIdx + 1][0] != '[') return true;
