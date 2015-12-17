@@ -97,7 +97,7 @@ exports.parseTargetTeams = function (text) {
     var startIdx = text.indexOf('[');
     var endIdx = text.indexOf(']');
 
-    var targetTeams = text.substr(startIdx, endIdx - startIdx).split(',');
+    var targetTeams = text.substr(startIdx + 1, endIdx - startIdx).split(',');
     targetTeams.forEach(t => {
       t.replace(/ /g,'');
     });
