@@ -6,7 +6,7 @@ function indexOfMarker(tokens, marker) {
     tokens.indexOf(`—${marker}`), 
     tokens.indexOf(`-${marker}`), 
     tokens.indexOf(`--${marker}`),
-    tokens.indexOf(`––${marker}`)
+    tokens.indexOf(`——${marker}`)
   ];
 
   var result = -1;
@@ -110,6 +110,7 @@ exports.parseTargetTeams = function (text) {
 exports.helpRequested = function (text) {
   var tokens = text.split(' ');
   if (tokens.length == 1) return true;
+  if (tokens.indexOf('help') == 1) return true;
   if (indexOfMarker(tokens, 'help') > -1) return true;
   return false;
 }
