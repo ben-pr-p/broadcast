@@ -61,7 +61,7 @@ exports.modifyAccepts = function modifyAccepts (recieverDomain, senderDomain, ac
 exports.addTeam = function addTeam (team, fn) {
   team.accepts = [];
 
-  allTeams(function (err, teams) {
+  exports.allTeams(function (err, teams) {
     if (err) return log(err), fn(err);
 
     teams.forEach(t => {
@@ -87,7 +87,7 @@ exports.addTeam = function addTeam (team, fn) {
  * Get the teams that `outTeam` is allowed to send messages to
  */
 exports.teamsFor = function (outTeamDomain, fn) {
-  allTeams(function (err, teams) {
+  exports.allTeams(function (err, teams) {
     if (err) return fn(err);
 
     var outTeamId = teams.filter(function (t) {
@@ -122,7 +122,7 @@ exports.getUser = function getUser (username, fn) {
  * Get a particular user, creating one if it doesn't exist
  */
 exports.ensureUser = function ensureUser (username, fn) {
-  getUser(function (err, user) {
+  exports.getUser(function (err, user) {
     if (err) return log(err), fn(err);
 
     if (!user) {
@@ -143,7 +143,7 @@ exports.ensureUser = function ensureUser (username, fn) {
  * Makes user with username admin
  */
 exports.makeUserAdmin = function (username, fn) {
-  ensureUser(username, function (err, user) {
+  exports.ensureUser(username, function (err, user) {
     if (err) return fn(err); if (!user) fn(null);
 
     user.admin = true;
@@ -159,7 +159,7 @@ exports.makeUserAdmin = function (username, fn) {
  * Ban a particular user
  */
 exports.modifySend = function (username, canSend, fn) {
-  ensureUser(username, function (err, user) {
+  exports.ensureUser(username, function (err, user) {
     if (err) return fn(err); if (!user) fn(null);
 
     user.send = canSend;
