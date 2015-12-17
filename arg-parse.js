@@ -8,47 +8,48 @@ function plusOneOf(text, marker) {
     return tokens[markerIdx + 1];
   }
 
-  return false;
+  return null;
 }
 
 exports.bannedUser = function (text) {
-  return plusOneOf(text, '--ban');
+  return plusOneOf(text, '--ban') || plusOneOf(text, '-ban');
 }
 
 exports.unbannedUser = function (text) {
-  return plusOneOf(text, '--unban');
+  return plusOneOf(text, '--unban') || plusOneOf(text, '-unban');
 }
 
 exports.adminUser = function (text) {
-  return plusOneOf(text, '--admin');
+  return plusOneOf(text, '--admin') || plusOneOf(text, '-admin');
 }
 
 exports.deadminUser = function (text) {
-  return plusOneOf(text, '--deadmin');
+  return plusOneOf(text, '--deadmin') || plusOneOf(text, '-deadmin');
 }
 
 exports.offTeam = function (text) {
-  return plusOneOf(text, '--turnoff');
+  return plusOneOf(text, '--turnoff') || plusOneOf(text, '-turnoff');
 }
 
 exports.onTeam = function (text) {
-  return plusOneOf(text, '--turnon');
+  return plusOneOf(text, '--turnon') || plusOneOf(text, '-turnon');
 }
 
 exports.addingTeam = function (text) {
-  return plusOneOf(text, '--addteam');
+  return plusOneOf(text, '--addteam') || plusOneOf(text, '-addteam');
 }
 
 exports.teamListRequested = function (text) {
   var tokens = text.split(' ');
-
-  var teamsIdx = tokens.indexOf('--teams');
+  log(tokens);
+  var teamsIdx = tokens.indexOf('--teams') > -1 ? tokens.indexOf('--teams') : tokens.indexOf('-teams');
+  log(teamsIdx);
   if (teamsIdx > -1) {
-    if (tokens.length == 2) return true;
+    if (tokens.length < 3) return true;
     if (tokens[teamsIdx + 1][0] != '[') return true;
   }
 
-  return false;
+  return null;
 }
 
 exports.teamList = function (askingTeamDomain, fn) {
