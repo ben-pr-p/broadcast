@@ -1,10 +1,23 @@
 var db = require('./db-api');
 var log = require('debug')('broadcast:arg-parse');
 
+function indexOfMarker(tokens, marker) {
+  var possibilities = [
+    tokens.indexOf(`—${marker}`), 
+    tokens.indexOf(`-${marker}`), 
+    tokens.indexOf(`--${marker}`),
+    tokens.indexOf(`––${marker}`)
+  ];
+  possibilities.forEach(idx => {
+    if (idx > -1) return idx;
+  });
+  return -1;
+}
+
 function plusOneOf(text, marker) {
   var tokens = text.split(' ');
 
-  var markerIdx = tokens.indexOf(marker);
+  var markerIdx = indexOfMarker(tokens, marker);
   if (markerIdx > -1) {
     return tokens[markerIdx + 1];
   }
@@ -13,37 +26,37 @@ function plusOneOf(text, marker) {
 }
 
 exports.bannedUser = function (text) {
-  return plusOneOf(text, '—ban');
+  return plusOneOf(text, 'ban');
 }
 
 exports.unbannedUser = function (text) {
-  return plusOneOf(text, '—unban');
+  return plusOneOf(text, 'unban');
 }
 
 exports.adminUser = function (text) {
-  return plusOneOf(text, '—admin');
+  return plusOneOf(text, 'admin');
 }
 
 exports.deadminUser = function (text) {
-  return plusOneOf(text, '—deadmin');
+  return plusOneOf(text, 'deadmin');
 }
 
 exports.offTeam = function (text) {
-  return plusOneOf(text, '—turnoff');
+  return plusOneOf(text, 'turnoff');
 }
 
 exports.onTeam = function (text) {
-  return plusOneOf(text, '—turnon');
+  return plusOneOf(text, 'turnon');
 }
 
 exports.addingTeam = function (text) {
-  return plusOneOf(text, '—addteam');
+  return plusOneOf(text, 'addteam');
 }
 
 exports.teamListRequested = function (text) {
   var tokens = text.split(' ');
   log(tokens);
-  var teamsIdx = tokens.indexOf('—teams');
+  var teamsIdx = indexOfMarker(tokens, 'teams');
   log(teamsIdx);
   if (teamsIdx > -1) {
     if (tokens.length < 3) return true;
@@ -77,7 +90,7 @@ exports.teamList = function (askingTeamDomain, fn) {
 exports.parseTargetTeams = function (text) {
   var tokens = text.split(' ');
 
-  var teamsIdx = tokens.indexOf('—teams');
+  var teamsIdx = indexOfMarker(tokens, 'teams');
   if (teamsIdx > -1) {
     var startIdx = text.indexOf('[');
     var endIdx = text.indexOf(']');
@@ -95,8 +108,7 @@ exports.parseTargetTeams = function (text) {
 exports.helpRequested = function (text) {
   var parsed = text.split(' ');
   if (parsed.length == 1) return true;
-  if (parsed[1] == 'help') return true;
-  if (parsed[1] == '—help') return true;
+  if (indexOfMarker(tokens, 'help') > -1) return true;
   return false;
 }
 
