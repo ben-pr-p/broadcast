@@ -86,7 +86,7 @@ exports.addTeam = function addTeam (team, fn) {
 
       exports.allTeams(function (err, teams) {
         Promise
-        .all( teams.map(t => promiseModifyAccepts(t.domain, newTeam.domain, true) )
+        .all( teams.map(t => promiseModifyAccepts(t.domain, newTeam.domain, true) ))
         .then(teams => {
           return fn(null, newTeam);
         }).catch(err => {
