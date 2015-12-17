@@ -80,7 +80,7 @@ exports.addTeam = function addTeam (team, fn) {
           return fn(null, newTeam);
         });
       });
-      
+
     });
   });
 
@@ -103,7 +103,7 @@ exports.teamsFor = function (outTeamDomain, fn) {
       return t.accepts.indexOf(outTeamId) > -1;
     });
 
-    log('%s is allowed to send to %s', outTeam, teamsFor);
+    log('%s is allowed to send to %s', outTeam.id, teamsFor.id);
     return fn(null, teamsFor);
   });
 }
