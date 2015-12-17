@@ -40,7 +40,7 @@ exports.modifyAccepts = function modifyAccepts (recieverDomain, senderDomain, ac
         reciever.accepts.push(sender.id);
       } else {
         // if reciever currently accepts sender, remove sender from reciever's accepts
-        if (reicever.accepts.indexOf(sender.id) > -1) {
+        if (reciever.accepts.indexOf(sender.id) > -1) {
           reciever.accepts.splice(sender.accepts.indexOf(sender.id), 1);
         }
       }
