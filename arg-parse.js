@@ -13,37 +13,37 @@ function plusOneOf(text, marker) {
 }
 
 exports.bannedUser = function (text) {
-  return plusOneOf(text, '--ban') || plusOneOf(text, '-ban');
+  return plusOneOf(text, '—ban');
 }
 
 exports.unbannedUser = function (text) {
-  return plusOneOf(text, '--unban') || plusOneOf(text, '-unban');
+  return plusOneOf(text, '—unban');
 }
 
 exports.adminUser = function (text) {
-  return plusOneOf(text, '--admin') || plusOneOf(text, '-admin');
+  return plusOneOf(text, '—admin');
 }
 
 exports.deadminUser = function (text) {
-  return plusOneOf(text, '--deadmin') || plusOneOf(text, '-deadmin');
+  return plusOneOf(text, '—deadmin');
 }
 
 exports.offTeam = function (text) {
-  return plusOneOf(text, '--turnoff') || plusOneOf(text, '-turnoff');
+  return plusOneOf(text, '—turnoff');
 }
 
 exports.onTeam = function (text) {
-  return plusOneOf(text, '--turnon') || plusOneOf(text, '-turnon');
+  return plusOneOf(text, '—turnon');
 }
 
 exports.addingTeam = function (text) {
-  return plusOneOf(text, '--addteam') || plusOneOf(text, '-addteam');
+  return plusOneOf(text, '—addteam');
 }
 
 exports.teamListRequested = function (text) {
   var tokens = text.split(' ');
   log(tokens);
-  var teamsIdx = tokens.indexOf('--teams') > -1 ? tokens.indexOf('--teams') : tokens.indexOf('-teams');
+  var teamsIdx = tokens.indexOf('—teams');
   log(teamsIdx);
   if (teamsIdx > -1) {
     if (tokens.length < 3) return true;
@@ -77,7 +77,7 @@ exports.teamList = function (askingTeamDomain, fn) {
 exports.parseTargetTeams = function (text) {
   var tokens = text.split(' ');
 
-  var teamsIdx = tokens.indexOf('--teams');
+  var teamsIdx = tokens.indexOf('—teams');
   if (teamsIdx > -1) {
     var startIdx = text.indexOf('[');
     var endIdx = text.indexOf(']');
@@ -96,7 +96,7 @@ exports.helpRequested = function (text) {
   var parsed = text.split(' ');
   if (parsed.length == 1) return true;
   if (parsed[1] == 'help') return true;
-  if (parsed[1] == '--help') return true;
+  if (parsed[1] == '—help') return true;
   return false;
 }
 
@@ -118,7 +118,7 @@ ${'```'}broadcast: --teams [domain name 1, domain name 2, ...] <your message her
 _Note – anything in between [ and ] will be interpreted as a team domain_
 
 To *quiet a team*, type:
-${'```'}broadcast: --turnoff <team domain>${'```'}
+${'```'}broadcast: —turnoff <team domain>${'```'}
 
 To *"unquiet" a team*, type:
 ${'```'}broadcast: --turnon <team domain>${'```'}
