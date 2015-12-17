@@ -4,16 +4,20 @@ var log = require('debug')('broadcast:db-api');
 var Team = mongoose.model('Team');
 var User = mongoose.model('User');
 
-/**
- * Add a new team with data in `team`
- */
-exports.addTeam = function addTeam (team, fn) {
-  var newTeam = new Team(team);
+var async = require('async');
 
-  newTeam.save(function (err) {
+/**
+ * Get all teams
+ */
+exports.allTeams = function allTeams (fn) {
+  Team
+  .find()
+  .exec(function (err, teams) {
     if (err) return log(err), fn(err);
 
-    return fn(null, newTeam);
+    if (!teams) return log('No teams found – returning null'), fn(null);
+
+    return log('Found teams %s', teams), fn(null, teams);
   });
 }
 
@@ -52,18 +56,31 @@ exports.modifyAccepts = function modifyAccepts (recieverDomain, senderDomain, ac
 }
 
 /**
- * Get all teams
+ * Add a new team with data in `team`
  */
-exports.allTeams = function allTeams (fn) {
-  Team
-  .find()
-  .exec(function (err, teams) {
+exports.addTeam = function addTeam (team, fn) {
+  team.accepts = [];
+
+  allTeams(function (err, teams) {
     if (err) return log(err), fn(err);
 
-    if (!teams) return log('No teams found – returning null'), fn(null);
+    teams.forEach(t => {
+      team.accepts.push(t.id);
+    });
 
-    return log('Found teams %s', teams), fn(null, teams);
+    var newTeam = new Team(team);
+
+    newTeam.save(function (err) {
+      if (err) return log(err), fn(err);
+
+      async.parallel( teams.map(t => modifyAccepts(t.domain, newTeam.domain, true) ), function (err, teams) {
+        if (err) return log(err), fn(err);
+
+        return fn(null, newTeam);
+      });
+    });
   });
+
 }
 
 /**

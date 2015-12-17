@@ -141,6 +141,22 @@ app.post('/', function (req, res) {
   }
 
   /**
+   * If they want to add a team, do it!
+   */
+  if (argParse.addingTeam(req.body.text)) {
+    eval(`var team = ${req.body.text.substr(req.body.text.indexOf('{'))}`);
+    db.addTeam(team, function (err, team) {
+      if (err) res.json({
+        text: `@${req.body.user_name}: Found error ${err}`
+      });
+
+      return res.json({
+        text: `@${req.body.user_name}: team ${team.domain} has been added.`
+      });
+    });
+  }
+
+  /**
    * Finally, broadcast!
    */
   broadcast(req.body, argParse.parseTargetTeams(req.body.text), function (err, teams) {

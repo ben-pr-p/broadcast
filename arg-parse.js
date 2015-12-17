@@ -35,6 +35,10 @@ exports.onTeam = function (text) {
   return plusOneOf(text, '--turnon');
 }
 
+exports.addingTeam = function (text) {
+  return plusOneOf(text, '--addteam');
+}
+
 exports.teamListRequested = function (text) {
   var tokens = text.split(' ');
 
