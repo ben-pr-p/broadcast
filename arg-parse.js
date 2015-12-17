@@ -130,7 +130,8 @@ If you'd just like to see the list of connected teams, type:
 You currently have ${teams.length} teams connected to your broadcast: they are:
 ${'```'}
 ${teamsDisplay}
-${'```'}`);
+${'```'}
+Contact ben.paul.ryan.packer@gmail.com`);
   });
 }
 

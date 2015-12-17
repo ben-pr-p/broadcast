@@ -43,7 +43,7 @@ module.exports = function broadcast(data, targetTeams, fn) {
 
     var teamsToSend = teams.filter(t => targetTeams.indexOf(t.domain) > -1);
 
-    var message = `${data.user_name} from ${displayName} says:\n${text}`;
+    var message = `${'```'}${data.user_name} from ${displayName} says:${'```'}\n${text}`;
 
     if (!originTeam.notifications) message = message.replace('@', '');
 
