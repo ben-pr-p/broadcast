@@ -146,7 +146,7 @@ app.post('/', function (req, res) {
   if (argParse.addingTeam(req.body.text)) {
     eval(`var team = ${req.body.text.substr(req.body.text.indexOf('{'))}`);
     db.addTeam(team, function (err, team) {
-      if (err) res.json({
+      if (err) return res.json({
         text: `@${req.body.user_name}: Found error ${err}`
       });
 
