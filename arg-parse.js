@@ -13,8 +13,11 @@ function indexOfMarker(tokens, marker) {
   log(possibilities);
   var result = -1;
   possibilities.forEach(idx => {
+    log(idx);
     result = idx;
   });
+  log('result');
+  log(result);
   return result;
 }
 
