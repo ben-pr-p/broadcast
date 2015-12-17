@@ -106,8 +106,8 @@ exports.parseTargetTeams = function (text) {
 }
 
 exports.helpRequested = function (text) {
-  var parsed = text.split(' ');
-  if (parsed.length == 1) return true;
+  var tokens = text.split(' ');
+  if (tokens.length == 1) return true;
   if (indexOfMarker(tokens, 'help') > -1) return true;
   return false;
 }
