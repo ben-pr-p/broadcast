@@ -53,7 +53,7 @@ module.exports = function broadcast(data, targetTeams, fn) {
         log('Found error: %s', err);
         return fn(err);
       }
-      fn(null, teamsSent.map(t => t.team_display));
+      fn(null, teamsSent.map(t => t.display));
     });
 
   });
