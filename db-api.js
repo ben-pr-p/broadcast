@@ -55,6 +55,17 @@ exports.modifyAccepts = function modifyAccepts (recieverDomain, senderDomain, ac
   });
 }
 
+function promiseModifyAccepts (recieverDomain, senderDomain, accepts) {
+  var promise = new Promise((resolve, reject) => {
+    exports.modifyAccepts(recieverDomain, senderDomain, accepts, function (err, reciever) {
+      if (err) return reject(err);
+
+      return resolve(err);
+    });
+  });
+  return promise;
+}
+
 /**
  * Add a new team with data in `team`
  */
@@ -74,10 +85,12 @@ exports.addTeam = function addTeam (team, fn) {
       if (err) return log(err), fn(err);
 
       exports.allTeams(function (err, teams) {
-        async.parallel( teams.map(t => exports.modifyAccepts(t.domain, newTeam.domain, true) ), function (err, teams) {
-          if (err) return log(err), fn(err);
-
+        Promise
+        .all( teams.map(t => promiseModifyAccepts(t.domain, newTeam.domain, true) )
+        .then(teams => {
           return fn(null, newTeam);
+        }).catch(err => {
+          if (err) return log(err), fn(err);
         });
       });
 
