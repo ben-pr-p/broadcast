@@ -153,7 +153,14 @@ app.post('/', function (req, res) {
   if (argParse.addingTeam(req.body.text)) {
     log('Adding team requested. Will not broadcast message.'); shouldBroadcast = false;
 
-    eval(`var team = ${req.body.text.substr(req.body.text.indexOf('{'))}`);
+    try {
+      eval(`var team = ${req.body.text.substr(req.body.text.indexOf('{'))}`);
+    } catch (err) {
+      return res.json({
+        text: `@${req.body.user_name}: Could not add team – incorrect json – ${err}`
+      });
+    }
+
     team.outUrl = team.outUrl.replace('<','').replace('>','');
     
     db.addTeam(team, function (err, team) {
