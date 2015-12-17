@@ -10,6 +10,7 @@ function indexOfMarker(tokens, marker) {
     tokens.indexOf(`--${marker}`),
     tokens.indexOf(`––${marker}`)
   ];
+  log(possibilities);
   possibilities.forEach(idx => {
     if (idx > -1) return idx;
   });
