@@ -2,22 +2,18 @@ var db = require('./db-api');
 var log = require('debug')('broadcast:arg-parse');
 
 function indexOfMarker(tokens, marker) {
-  log(tokens);
-  log(marker);
   var possibilities = [
     tokens.indexOf(`—${marker}`), 
     tokens.indexOf(`-${marker}`), 
     tokens.indexOf(`--${marker}`),
     tokens.indexOf(`––${marker}`)
   ];
-  log(possibilities);
+
   var result = -1;
   possibilities.forEach(idx => {
-    log(idx);
-    result = idx;
+    if (idx > -1) result = idx;
   });
-  log('result');
-  log(result);
+
   return result;
 }
 
