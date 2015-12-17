@@ -101,6 +101,7 @@ exports.parseTargetTeams = function (text) {
     targetTeams.forEach(t => {
       t.replace(/ /g,'');
     });
+    log('Teams %s targeted', targetTeams);
     return targetTeams;
   }
 
