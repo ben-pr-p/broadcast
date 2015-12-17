@@ -38,7 +38,7 @@ module.exports = function broadcast(data, targetTeams, fn) {
     var displayName = originTeam.display;
 
     var text;
-    if (targetTeams) text = data.text.substr(data.text.indexOf(']'));
+    if (targetTeams) text = data.text.substr(data.text.indexOf(']') + 1);
     else text = data.text.substr(10);
 
     var teamsToSend = teams;
