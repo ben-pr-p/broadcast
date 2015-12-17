@@ -108,30 +108,30 @@ exports.helpMessage = function (fn) {
     });
 
     return fn(null, `Welcome to broadcast! A Slack bot for sending messages across Slack teams.
-To use broadcast, simply type:
-\`broadcast: <your message here>\`
+*Broadcast a message* with:
+${'```'}broadcast: <your message here>${'```'}
 
-To target your message to only a few teams, choose some domain names (the part before -->> from the list below) and type:
-\`broadcast: --teams [domain name 1, domain name 2, ...] <your message here>\`
-Note – anything in between [ and ] will be interpreted as a team domain.
+*Target your message to specific teams* by using \`--teams\`:
+${'```'}broadcast: --teams [domain name 1, domain name 2, ...] <your message here>${'```'}
+_Note – anything in between [ and ] will be interpreted as a team domain_
 
-To disable the ability to recieve messages from a team, type:
-\`broadcast: --turnoff <team domain>\`
+To *quiet a team*, type:
+${'```'}broadcast: --turnoff <team domain>${'```'}
 
-To re-enable that ability after you've turned it off, type:
-\`broadcast: --turnon <team domain>\`
+To *"unquiet" a team*, type:
+${'```'}broadcast: --turnon <team domain>${'```'}
 
-If you'd like to see this help message, including the list of teams and their domains, type:
-\`broadcast: help\` or \`broadcast:\` with nothing after.
+To see this *help message*, type:
+${'```'}broadcast: help${'```'}
 
-If you'd just like to see the list of connected teams, type:
-\`broadcast: --teams\` with nothing after.
+To see the *list of connected teams*, type:
+${'```'}broadcast: --teams${'```'} with nothing after.
 
-You currently have ${teams.length} teams connected to your broadcast: they are:
+You currently have ${teams.length} teams connected to your broadcast:
 ${'```'}
 ${teamsDisplay}
 ${'```'}
-Contact ben.paul.ryan.packer@gmail.com`);
+Contact ben.paul.ryan.packer@gmail.com with questions`);
   });
 }
 

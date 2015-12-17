@@ -90,9 +90,11 @@ exports.teamsFor = function (outTeamDomain, fn) {
   exports.allTeams(function (err, teams) {
     if (err) return fn(err);
 
-    var outTeamId = teams.filter(function (t) {
+    var outTeam = teams.filter(function (t) {
       return t.domain == outTeamDomain;
-    })[0].id;
+    })[0];
+
+    if (outTeam) var outTeamId = outTeam.id;
 
     var teamsFor = teams.filter(function (t) {
       return t.accepts.indexOf(outTeamId) > -1;
