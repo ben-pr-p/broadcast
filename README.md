@@ -1,3 +1,9 @@
+# Unused or Maintained
+
+Around 25 different Bernie Sanders groups got on this at one point I think, but it was way too spammy and I think everyone hated it.
+
+I think this type of messaging is a bad substitute for Slack not having recursive teams. Somebody make Slack with recursive teams and then get a lot of people to use it! Thanks!
+
 # broadcast
 ![alt tag](http://i.imgur.com/Qa2Civs.png)
 
